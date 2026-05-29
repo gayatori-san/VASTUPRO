@@ -1,0 +1,6 @@
+{
+  "name": "VastuPro",
+  "description": "VastuPro is a premium, responsive Indian Astrology and Vastu SaaS platform combining ancient spiritual wisdom with modern AI technologies.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

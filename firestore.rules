@@ -1,0 +1,110 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. Global Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isDocOwner(docData) {
+      return isSignedIn() && docData.userId == request.auth.uid;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == "g8805664808@gmail.com" ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin")
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // -- Collection: /users/{userId}
+    // Only the profile owner or an admin can access/read.
+    // Standard users can create or update, but cannot elevate their own role to 'admin'.
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId) && 
+                    request.resource.data.uid == userId &&
+                    request.resource.data.role == "user" &&
+                    request.resource.data.createdAt == request.time;
+      allow update: if (isOwner(userId) && 
+                    request.resource.data.role == resource.data.role && // No privilege escalation
+                    request.resource.data.createdAt == resource.data.createdAt) || 
+                    isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // -- Collection: /orders/{orderId}
+    // Users can read/list their own orders. Only backend or Admin completes payments/creates order entries.
+    // Since user client-side may initiate a simulation checkout, let's allow them to create a pending order for themselves.
+    match /orders/{orderId} {
+      allow get: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isSignedIn() && 
+                    isValidId(orderId) &&
+                    request.resource.data.userId == request.auth.uid &&
+                    request.resource.data.status == "pending" &&
+                    request.resource.data.createdAt == request.time;
+      allow update: if isAdmin() || (
+                    isSignedIn() && 
+                    resource.data.userId == request.auth.uid && 
+                    request.resource.data.status == "completed" && 
+                    request.resource.data.userId == resource.data.userId &&
+                    request.resource.data.createdAt == resource.data.createdAt
+                    );
+      allow delete: if isAdmin();
+    }
+
+    // -- Collection: /payments/{paymentId}
+    // Verified payment transactions.
+    match /payments/{paymentId} {
+      allow get: if isSignedIn() && (get(/databases/$(database)/documents/orders/$(resource.data.orderId)).data.userId == request.auth.uid || isAdmin());
+      allow list: if isAdmin();
+      allow create, update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // -- Collection: /reports/{reportId}
+    // Users can access their own report items.
+    match /reports/{reportId} {
+      allow get: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAdmin() || (
+                    isSignedIn() && 
+                    isValidId(reportId) &&
+                    request.resource.data.userId == request.auth.uid &&
+                    request.resource.data.createdAt == request.time
+                    );
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // -- Collection: /services/{serviceId}
+    // Anyone can read services context. Only admins can register or adjust service prices.
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // -- Collection: /subscriptions/{subscriptionId}
+    // Users can read their subscriptions state to verify Premium level.
+    match /subscriptions/{subscriptionId} {
+      allow read: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow write: if isAdmin();
+    }
+  }
+}

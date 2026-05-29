@@ -1,0 +1,124 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique user ID" },
+        "email": { "type": "string", "description": "User email address" },
+        "displayName": { "type": "string", "description": "User screen name" },
+        "photoURL": { "type": "string", "description": "User profile avatar url" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Date of account registration" },
+        "role": { "type": "string", "enum": ["user", "admin"], "description": "User permission role" },
+        "credits": { "type": "number", "description": "Available report generating credits" }
+      },
+      "required": ["uid", "email", "createdAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Purchase orders for astrology or Vastu consultation reports",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string", "description": "Unique purchase order identifier" },
+        "userId": { "type": "string", "description": "Linked user account ID" },
+        "serviceId": { "type": "string", "description": "ID of purchased service" },
+        "serviceName": { "type": "string", "description": "Plain language service title" },
+        "amount": { "type": "number", "description": "Paid amount in INR" },
+        "status": { "type": "string", "enum": ["pending", "completed", "failed"], "description": "Order processing status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Date created" },
+        "customerEmail": { "type": "string", "description": "Email address of customer" },
+        "customerName": { "type": "string", "description": "Name of customer" },
+        "inputs": { "type": "object", "description": "Form inputs such as Kundli details" },
+        "reportId": { "type": "string", "description": "Linked generated report ID if completed" }
+      },
+      "required": ["orderId", "userId", "serviceId", "serviceName", "amount", "status", "createdAt"]
+    },
+    "Payment": {
+      "title": "Payment",
+      "description": "Payment transactions recorded from Cashfree",
+      "type": "object",
+      "properties": {
+        "paymentId": { "type": "string", "description": "Unique payment attempt ID" },
+        "orderId": { "type": "string", "description": "Linked purchase order ID" },
+        "transactionId": { "type": "string", "description": "Merchant Gateway transaction number" },
+        "amount": { "type": "number" },
+        "currency": { "type": "string" },
+        "status": { "type": "string", "enum": ["PENDING", "SUCCESS", "FAILED", "CANCELLED"] },
+        "method": { "type": "string", "description": "UPI, Card, Netbanking, etc." },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["paymentId", "orderId", "amount", "status", "createdAt"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "Personalized cosmic/Vastu analysis reports (AI generated and saved)",
+      "type": "object",
+      "properties": {
+        "reportId": { "type": "string", "description": "Unique report identifier" },
+        "userId": { "type": "string", "description": "Owner of the report" },
+        "serviceId": { "type": "string" },
+        "title": { "type": "string", "description": "Title of report" },
+        "content": { "type": "string", "description": "Report contents/sections" },
+        "inputs": { "type": "object", "description": "Details used to generate this report" },
+        "isPremium": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reportId", "userId", "serviceId", "title", "content", "createdAt"]
+    },
+    "Service": {
+      "title": "Service",
+      "description": "Active services list",
+      "type": "object",
+      "properties": {
+        "serviceId": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "premium": { "type": "boolean" },
+        "category": { "type": "string" }
+      },
+      "required": ["serviceId", "name", "price", "premium"]
+    },
+    "Subscription": {
+      "title": "Subscription",
+      "description": "User pricing tier subscriptions",
+      "type": "object",
+      "properties": {
+        "subscriptionId": { "type": "string" },
+        "userId": { "type": "string" },
+        "tier": { "type": "string", "enum": ["free", "premium"] },
+        "status": { "type": "string" },
+        "expiresAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["subscriptionId", "userId", "tier", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles storing personal data"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Cosmic service order requests"
+    },
+    "/payments/{paymentId}": {
+      "schema": "Payment",
+      "description": "Completed transaction reference history"
+    },
+    "/reports/{reportId}": {
+      "schema": "Report",
+      "description": "History of generated astrology and Vastu reports"
+    },
+    "/services/{serviceId}": {
+      "schema": "Service",
+      "description": "Standard catalog of astro/vastu service descriptions"
+    },
+    "/subscriptions/{subscriptionId}": {
+      "schema": "Subscription",
+      "description": "Active subscriptions checking access overrides"
+    }
+  }
+}

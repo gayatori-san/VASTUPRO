@@ -1,0 +1,171 @@
+{
+  "kingNumbers": {
+    "1": {
+      "lucky": [1, 2, 3, 5, 9],
+      "enemy": [8],
+      "hardCoreEnemy": [],
+      "neutral": [6, 4, 7]
+    },
+    "2": {
+      "lucky": [1, 3, 5],
+      "enemy": [9, 4],
+      "hardCoreEnemy": [8],
+      "neutral": [6, 2, 7]
+    },
+    "3": {
+      "lucky": [1, 2, 3, 5, 7],
+      "enemy": [6],
+      "hardCoreEnemy": [],
+      "neutral": [8, 9, 4]
+    },
+    "4": {
+      "lucky": [1, 6, 7, 8, 4],
+      "enemy": [9, 2],
+      "hardCoreEnemy": [],
+      "neutral": [3, 5]
+    },
+    "5": {
+      "lucky": [1, 2, 3, 5, 6],
+      "enemy": [],
+      "hardCoreEnemy": [],
+      "neutral": [7, 8, 9, 4]
+    },
+    "6": {
+      "lucky": [4, 5, 6, 7],
+      "enemy": [3],
+      "hardCoreEnemy": [3],
+      "neutral": [8, 9, 2, 1]
+    },
+    "7": {
+      "lucky": [1, 4, 5, 6],
+      "enemy": [],
+      "hardCoreEnemy": [],
+      "neutral": [3, 8, 9, 2, 7]
+    },
+    "8": {
+      "lucky": [3, 5, 6, 4, 8],
+      "enemy": [1, 2],
+      "hardCoreEnemy": [1, 2],
+      "neutral": [9, 7]
+    },
+    "9": {
+      "lucky": [1, 3, 5],
+      "enemy": [4, 2],
+      "hardCoreEnemy": [],
+      "neutral": [9, 8, 7, 6]
+    }
+  },
+  "repeatEffects": {
+    "11": "Emotional, Ego, Attitude, communication and speaking fast",
+    "22": "Mood swing, Depression, too much Emotional, BP problem. If name starts with B, K, or R, then there is a 100% chance of Emotional issues.",
+    "33": "Hunger for Knowledge, Less Grounded",
+    "44": "Delay, Struggle, Headache",
+    "55": "Lazy, lethargic, communication and money can increase",
+    "66": "Luxury lover, Travelling, at times not allowed to use resources when needed",
+    "77": "Mood swings, Internal Disturbances, Spirituality, Over-thinking, Anxiety",
+    "88": "Delay, Disturbance, Obstacles",
+    "99": "Debt, Anger, Blood-related issues, skin color red tone, children can inherit this combo"
+  },
+  "goodCombos": {
+    "12": "Attractive face, saving person, Helpful life partner",
+    "21": "Attractive face, saving person, Helpful life partner",
+    "13": "Good Advisor, Good Education, Respectful and Popular, Special in his circle",
+    "31": "Good Advisor, Good Education, Respectful and Popular, 31 combination makes person Professional",
+    "15": "Father's popularity, Generally these people make their father famous (good cause)",
+    "51": "Father's popularity, Generally these people make their father famous (good cause)",
+    "25": "Hath me Shaffa, Can work in occult science/Medical line, One who gives Bail to others, Success through Air-Travel. Try to avoid stuff related to Finance.",
+    "52": "Hath me Shaffa, Can work in occult science/Medical line, One who gives Bail to others, Success through Air-Travel. Try to avoid stuff related to Finance.",
+    "29": "Person has decent amount of Money, Lives happily on the money of Someone else. Native might become egoistic. If DOB has 29, Relationship issues can arise.",
+    "92": "Person has decent amount of Money, Lives happily on the money of Someone else. Native might become egoistic. If DOB has 29, Relationship issues can arise.",
+    "37": "Complete personality, person would be able to take benefit from knowledge",
+    "73": "Complete personality, person would be able to take benefit from knowledge",
+    "38": "Real Estate, Counsellor, Peacemaker or mediator between Two parties",
+    "83": "Real Estate, Counsellor, Peacemaker or mediator between Two parties",
+    "47": "Honest, Brilliant, gives importance to Integrity (Rahu-Ketu Combo)",
+    "74": "Honest, Brilliant, gives importance to Integrity (Rahu-Ketu Combo)",
+    "57": "Speaker, writer, Public relations, Good Expressive person. Many people seek advice from them.",
+    "75": "Speaker, writer, Public relations, Good Expressive person. Many people seek advice from them.",
+    "69": "Good management skill, Good Planner, Opposite sex involvement",
+    "96": "Good management skill, Good Planner, Opposite sex involvement",
+    "78": "Healer, Idealistic, Solves any problem by their own inner power",
+    "87": "Healer, Idealistic, Solves any problem by their own inner power"
+  },
+  "neutralCombos": {
+    "17": "Money related work is never stopped. Close circle includes some Govt. job holder. Potentially working in MNC with remote facilities. Chances of 2 marriages; high profit from lying. (If DOB has many 7s, do not choose this combo; if 2,5,6 are missing from DOB and mobile has 17, it leads to major relationship issues)",
+    "71": "Money related work is never stopped. Close circle includes some Govt. job holder. Potentially working in MNC with remote facilities. Chances of 2 marriages; high profit from lying. (If DOB has many 7s, do not choose this combo; if 2,5,6 are missing from DOB and mobile has 71, it leads to major relationship issues)",
+    "19": "You own what you want, Always on a high place, Professional person, Rasukhdar, Freedom Lover",
+    "91": "You own what you want, Always on a high place, Professional person, Rasukhdar, Freedom Lover",
+    "24": "Keep patience to achieve something, Makes different plans and brain actively processes them. Beware of negative/destructive thinking.",
+    "42": "Keep patience to achieve something, Makes different plans and brain actively processes them. Beware of negative/destructive thinking.",
+    "35": "Success away from Home, Fear of Father, Hence Successful, Good Economical Condition, Liquid money problem",
+    "53": "Success away from Home, Fear of Father, Hence Successful, Good Economical Condition, Liquid money problem",
+    "36": "More of a principle-oriented person, Barrier in Studies, Good knowledge but struggles with presentations",
+    "63": "More of a principle-oriented person, Barrier in Studies, Good knowledge but struggles with presentations",
+    "39": "Loves to show-off, Person will have a lot of Duality in nature",
+    "93": "Loves to show-off, Person will have a lot of Duality in nature",
+    "49": "Do risky work, Uniform work, Criminal minded tendency",
+    "94": "Do risky work, Uniform work, Criminal minded tendency",
+    "56": "Hesitates to ask for their own money. Likely has a large landmark like a temple or superstore near their house. Business-minded.",
+    "65": "Hesitates to ask for their own money. Likely has a large landmark like a temple or superstore near their house. Business-minded.",
+    "58": "Stuck money, Calculated mind. Works in fields related to Money/Finance. High talk of Lakhs and Crores.",
+    "85": "Stuck money, Calculated mind. Works in fields related to Money/Finance. High talk of Lakhs and Crores.",
+    "59": "Destructive relationship through bad speech, Person often opts for Science or Commerce stream.",
+    "95": "Destructive relationship through bad speech, Person often opts for Science or Commerce stream.",
+    "79": "Success after separation from Father",
+    "97": "Success after separation from Father"
+  },
+  "negativeCombos": {
+    "14": "Vulnerable to Loan liabilities, Legal notices, Health issues, and hardship. Represents a tough, heavy-work life.",
+    "41": "Vulnerable to Loan liabilities, Legal notices, Health issues, and hardship. Represents a tough, heavy-work life.",
+    "16": "Highly negative. Health issues for spouse, marital disputes, restricted income. Owners often find income confined while active on this number.",
+    "61": "Highly negative. Health issues for spouse, marital disputes, restricted income. Owners often find income confined while active on this number.",
+    "18": "Very negative. Spouse health issues, friction or lack of understanding between father and son, government-related issues, frequent job shifts.",
+    "81": "Very negative. Spouse health issues, friction or lack of understanding between father and son, government-related issues, frequent job shifts.",
+    "23": "Generates many enemies, though surprisingly none of them will succeed in causing actual harm.",
+    "32": "Generates many enemies, though surprisingly none of them will succeed in causing actual harm.",
+    "26": "Barriers in studies or complete break in education. If a girl, potential conflicts with mother-in-law. Strong obsession with money or opposite sex; health-wise suggests lower sperm counts or high susceptibility to diabetes.",
+    "62": "Barriers in studies or complete break in education. If a girl, potential conflicts with mother-in-law. Strong obsession with money or opposite sex; health-wise suggests lower sperm counts or high susceptibility to diabetes.",
+    "27": "Good intuitive capacity, but susceptible to joint pain, urinary problems, or Arthritis (Vaat Issue).",
+    "72": "Good intuitive capacity, but susceptible to joint pain, urinary problems, or Arthritis (Vaat Issue).",
+    "28": "Decent cash inflow but leads to excessive Medical and Hospital expenditure. Suggests two marriages in the family. Important to avoid bad company to stay safe (Vish Yog).",
+    "82": "Decent cash inflow but leads to excessive Medical and Hospital expenditure. Suggests two marriages in the family. Important to avoid bad company to stay safe (Vish Yog).",
+    "34": "Susceptible to legs shivering, family history of paralysis, or respiratory/breathing issues. Avoid if birth date has three or more '8's.",
+    "43": "Susceptible to legs shivering, family history of paralysis, or respiratory/breathing issues. Avoid if birth date has three or more '8's.",
+    "45": "Frequent hospital or court visits for various physical and legal complications. A highly restricted lifestyle.",
+    "54": "Frequent hospital or court visits for various physical and legal complications. A highly restricted lifestyle.",
+    "46": "Prone to extra-marital affairs, inter-caste marriages, or urinary tract infections.",
+    "64": "Prone to extra-marital affairs, inter-caste marriages, or urinary tract infections.",
+    "48": "Highly negative. Prone to blood-related diseases, highly stubborn/incurable chronic ailments, and deficiency in sexual health/intimacy.",
+    "84": "Highly negative. Prone to blood-related diseases, highly stubborn/incurable chronic ailments, and deficiency in sexual health/intimacy.",
+    "67": "High chance of love marriage, but yields health issues in spouse and an overall disturbed/unstable married life.",
+    "76": "High chance of love marriage, but yields health issues in spouse and an overall disturbed/unstable married life.",
+    "68": "Susceptible to eye-related disorders or chronic afflictions in any single organ of the body. Avoid if birth date features multiple '1's.",
+    "86": "Susceptible to eye-related disorders or chronic afflictions in any single organ of the body. Avoid if birth date features multiple '1's.",
+    "89": "Highly argumentative temperament, strict adhere-to-principle attitude, or chronic organic issues in later stages of life.",
+    "98": "Highly argumentative temperament, strict adhere-to-principle attitude, or chronic organic issues in later stages of life."
+  },
+  "totalPreferences": {
+    "1": {
+      "prefCombos": ["46", "64", "37", "55"],
+      "purpose": "Job related issue, Govt. related issue, No respect & Fame in Life, Somewhat Health issue, Want authority, Career, Politics, Profession"
+    },
+    "3": {
+      "prefCombos": ["66", "39", "30"],
+      "purpose": "Knowledge to conceive, Overall Prosperity, Teaching, To make you Lucky, Health"
+    },
+    "5": {
+      "prefCombos": ["41", "32", "50", "59"],
+      "purpose": "Over all Balance in life, Education, Good for profession, Business, Communication, Money Flow"
+    },
+    "6": {
+      "prefCombos": ["42", "24", "33", "60"],
+      "purpose": "42 for marriage, Over all Luxury, 33 Abroad, Foreign Travel, Relationship, To increase money flow"
+    }
+  },
+  "avoidList": [
+    "14", "41", "16", "61", "18", "81", "23", "32", "26", "62", "27", "72", "28", "82", 
+    "34", "43", "45", "54", "46", "64", "48", "84", "67", "76", "68", "86", "89", "98", 
+    "36", "63", "49", "94", "58", "85", "00", "000", "0000", "99", "999", "88", "888", 
+    "77", "777", "666", "555", "444", "44", "333", "22", "222", "111"
+  ]
+}
