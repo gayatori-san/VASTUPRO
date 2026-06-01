@@ -8,11 +8,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Sparkles, HeartHandshake, Compass, Hash, Calendar, 
   MapPin, Clock, User, ArrowRight, UserCheck, Play, 
-  Settings, CheckCircle, AlertCircle, Smartphone
+  Settings, CheckCircle, AlertCircle, Smartphone, Award
 } from 'lucide-react';
 import { 
   calculateKundli, calculateGunMilan, calculateVastu, 
-  calculateNumerology, getDailyHoroscope, ZODIAC_SIGNS,
+  calculateNumerology, calculateRudrakshaAlignment,
   calculateMobileNumerology
 } from '../utils/calculators';
 import { UserProfile, PurchaseOrder } from '../types';
@@ -36,7 +36,7 @@ export default function AstroCalculators({
   onDecrementCredit,
   onRedirectToServices
 }: AstroCalculatorsProps) {
-  const [activeCalc, setActiveCalc] = useState<'kundli' | 'matching' | 'vastu' | 'numerology' | 'daily' | 'mobile-numerology'>('kundli');
+  const [activeCalc, setActiveCalc] = useState<'kundli' | 'matching' | 'vastu' | 'numerology' | 'rudraksha' | 'mobile-numerology'>('kundli');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -90,9 +90,12 @@ export default function AstroCalculators({
   const [mobileNumerologyResult, setMobileNumerologyResult] = useState<any>(null);
   const [mobileDecision, setMobileDecision] = useState<'yes' | 'no' | null>(null);
 
-  // 5. Daily Daily Outlook state
-  const [selectedZodiac, setSelectedZodiac] = useState('Aries');
-  const [dailyResult, setDailyResult] = useState<any>(null);
+  // 5. Rudraksha Alignment state
+  const [rudrakshaInputs, setRudrakshaInputs] = useState({
+    birthDate: '1998-05-15',
+    priority: 'wealth' as 'wealth' | 'health' | 'education' | 'relationship' | 'protection' | 'career'
+  });
+  const [rudrakshaResult, setRudrakshaResult] = useState<any>(null);
 
   // Quick Client local calculators
   const handleCalculateKundli = (e: React.FormEvent) => {
@@ -127,9 +130,10 @@ export default function AstroCalculators({
     setNumerologyResult(res);
   };
 
-  const handleCalculateDaily = (sign: string) => {
-    const res = getDailyHoroscope(sign);
-    setDailyResult(res);
+  const handleCalculateRudraksha = (e: React.FormEvent) => {
+    e.preventDefault();
+    const res = calculateRudrakshaAlignment(rudrakshaInputs.birthDate, rudrakshaInputs.priority);
+    setRudrakshaResult(res);
   };
 
   const handleCalculateMobileNumerology = (e: React.FormEvent) => {
@@ -151,7 +155,7 @@ export default function AstroCalculators({
     }
 
     if (credits <= 0) {
-      alert("Insufficient credits to generate full Premium AI Report. Please subscribe or purchase credits.");
+      alert("Insufficient credits to generate full Premium Professionally Calculated Report. Please subscribe or purchase credits.");
       onNavigateToPricing();
       return;
     }
@@ -176,7 +180,7 @@ export default function AstroCalculators({
           reportId: 'REP_' + Math.round(Math.random() * 899999 + 100000),
           userId: user.uid,
           serviceId: serviceId,
-          title: `Premium AI Cosmic Analysis: ${serviceId.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`,
+          title: `Premium Professionally Calculated Cosmic Analysis: ${serviceId.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`,
           content: resJson.content,
           inputs: clientInputs,
           isPremium: true,
@@ -205,7 +209,7 @@ export default function AstroCalculators({
           Enter Your Details to <span className="text-gold-gradient">Decrypt Your Horizon</span>
         </h2>
         <p className="mt-4 max-w-2xl mx-auto text-gray-400 text-sm md:text-base">
-          Our computational Astro-Engine processes standard coordinates instantly. Premium tier users can trigger deep AI structural prescriptions.
+          Our computational Astro-Engine processes standard coordinates instantly. Premium tier users can trigger deep professionally calculated structural prescriptions.
         </p>
       </div>
 
@@ -217,7 +221,7 @@ export default function AstroCalculators({
           { id: 'vastu', label: 'Home Vastu Audit', icon: Compass },
           { id: 'numerology', label: 'Numerology Loshu', icon: Hash },
           { id: 'mobile-numerology', label: 'Mobile Numerology', icon: Smartphone },
-          { id: 'daily', label: 'Daily Outlook', icon: Calendar }
+          { id: 'rudraksha', label: 'Rudraksha Alignment', icon: Award }
         ].map(calc => (
           <button
             key={calc.id}
@@ -625,42 +629,58 @@ export default function AstroCalculators({
               </motion.form>
             )}
 
-            {activeCalc === 'daily' && (
-              <motion.div 
-                key="daily"
+            {activeCalc === 'rudraksha' && (
+              <motion.form 
+                key="rudraksha"
+                onSubmit={handleCalculateRudraksha}
                 initial={{ opacity: 0 }} 
                 animate={{ opacity: 1 }} 
                 exit={{ opacity: 0 }}
                 className="space-y-4"
               >
                 <div className="flex items-center gap-2 mb-4 border-b border-white/5 pb-3">
-                  <Calendar className="text-gold-400 h-5 w-5" />
-                  <h3 className="font-serif font-bold text-xl text-amber-100">Daily Lunar Transit Check</h3>
+                  <Award className="text-gold-400 h-5 w-5" />
+                  <h3 className="font-serif font-bold text-xl text-amber-100 font-sans">Rudraksha &amp; Siddh Mala Alignment</h3>
                 </div>
 
-                <div className="grid grid-cols-4 gap-2 max-h-[280px] overflow-y-auto pr-1">
-                  {ZODIAC_SIGNS.map(sign => (
-                    <button
-                      key={sign.name}
-                      onClick={() => {
-                        setSelectedZodiac(sign.name);
-                        handleCalculateDaily(sign.name);
-                      }}
-                      className={`flex flex-col items-center justify-center py-2.5 rounded-lg border transition-all ${
-                        selectedZodiac === sign.name 
-                          ? 'bg-gold-gradient text-royal-950 border-amber-400 scale-103 shadow-md' 
-                          : 'bg-royal-940/30 text-gray-300 border-white/5 hover:border-gold-500/30'
-                      }`}
+                {/* Inputs */}
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 mb-1">Date of Birth</label>
+                    <input 
+                      type="date"
+                      value={rudrakshaInputs.birthDate}
+                      onChange={(e) => setRudrakshaInputs(prev => ({ ...prev, birthDate: e.target.value }))}
+                      className="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-royal-900/50 text-xs text-white focus:outline-none focus:border-gold-400 transition"
+                      required
+                    />
+                    <p className="text-[10px] text-gray-500 mt-1">Calculates your core King &amp; Conductor planetary alignment.</p>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 mb-1">Primordial Priority / Vital Focus Area</label>
+                    <select
+                      value={rudrakshaInputs.priority}
+                      onChange={(e) => setRudrakshaInputs(prev => ({ ...prev, priority: e.target.value as any }))}
+                      className="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-royal-900 text-xs text-white focus:outline-none focus:border-gold-400 transition"
                     >
-                      <span className="text-lg">{sign.symbol}</span>
-                      <span className="text-[10px] font-bold mt-1 tracking-tight truncate w-full text-center">{sign.name}</span>
-                    </button>
-                  ))}
+                      <option value="wealth">Abundance, Luxury, and Wealth Attract (Venus &amp; Kuber)</option>
+                      <option value="health">Prana Health, Healing, Joints, and Longevity (Agni, Mars, Sun)</option>
+                      <option value="education">Intellect, Saraswati Brain Focus, and Memory (Jupiter &amp; Venus)</option>
+                      <option value="relationship">Marital Harmony, Finding Soulmate (Gauri Shankar, Shiva Shakti)</option>
+                      <option value="protection">Evil-Eye Shield, Court Cases, and Debt Removal (Durga Devi, Rahu)</option>
+                      <option value="career">Career Path Obstacle Removal, Confidence and Daring (Ganesha, Hanuman)</option>
+                    </select>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <p className="text-xs text-gray-400 italic">Select your Moon/Zodiac sign to align daily energy trends.</p>
-                </div>
-              </motion.div>
+
+                <button
+                  type="submit"
+                  className="w-full mt-6 bg-gold-gradient text-royal-950 font-extrabold py-3.5 rounded-xl hover:opacity-90 active:scale-95 transition cursor-pointer text-xs"
+                >
+                  Align Holy Beads
+                </button>
+              </motion.form>
             )}
           </AnimatePresence>
         </div>
@@ -680,7 +700,7 @@ export default function AstroCalculators({
                 <Compass className="h-16 w-16 text-gold-400 animate-spin-slow mb-6" />
                 <h4 className="font-serif text-2xl font-bold tracking-tight text-white animate-pulse">Channels Aligning...</h4>
                 <p className="text-sm text-gray-400 max-w-sm mt-3 leading-relaxed">
-                  VastuPro Gemini AI is fetching planetary matrices, checking Ashtakoot boundaries, and generating your detailed corrective prescriptions.
+                  VastuPro Professional Vedic Engine is fetching planetary matrices, checking Ashtakoot boundaries, and generating your detailed corrective prescriptions.
                 </p>
                 <div className="mt-8 flex justify-center space-x-1.5">
                   <div className="h-2 w-2 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: '0ms' }} />
@@ -968,15 +988,104 @@ export default function AstroCalculators({
                           ))}
                         </div>
 
-                        {/* Planets Summary */}
-                        <div className="bg-royal-900/50 border border-white/5 p-4 rounded-xl text-xs space-y-2">
-                          <p className="font-bold text-amber-100 uppercase tracking-widest text-[10px]">Driver Planet Alignments</p>
-                          <p className="text-gray-300">Your core planet is **${numerologyResult.driverPlanet.planet}**. Key traits under management: *${numerologyResult.driverPlanet.traits}*.</p>
-                          <p className="text-gray-300 font-medium">Lucky color vibration: <span className="text-gold-300 font-bold">{numerologyResult.driverPlanet.color}</span></p>
-                          <div className="border-t border-white/5 pt-2 mt-2">
-                            <p className="font-bold text-amber-100 uppercase tracking-widest text-[10px]">Loshu Destiny Guidance</p>
-                            <p className="text-gray-400 italic font-medium mt-1">"{numerologyResult.advice}"</p>
+                        {/* Aligned Professional Career Routes */}
+                        <div className="bg-royal-900/45 border border-white/5 p-4 rounded-xl text-xs space-y-4">
+                          <div>
+                            <span className="font-bold text-amber-300 uppercase tracking-widest text-[9px] flex items-center gap-1.5 mb-2">
+                              <Compass className="h-3.5 w-3.5 text-amber-400" />
+                              Highly Aligned Career Fields
+                            </span>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              <div className="space-y-1.5">
+                                <p className="text-gray-400 font-semibold uppercase text-[8px] tracking-wider">Driver Aligned ({numerologyResult.driverPlanet.planet}):</p>
+                                <ul className="list-inside list-disc text-gray-300 space-y-1 pl-1">
+                                  {numerologyResult.driverCareers.map((c: string, idx: number) => (
+                                    <li key={idx}>{c}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                              <div className="space-y-1.5 border-t sm:border-t-0 sm:border-l border-white/5 pt-2 sm:pt-0 sm:pl-4">
+                                <p className="text-gray-400 font-semibold uppercase text-[8px] tracking-wider">Conductor Aligned ({numerologyResult.conductorPlanet.planet}):</p>
+                                <ul className="list-inside list-disc text-gray-300 space-y-1 pl-1">
+                                  {numerologyResult.conductorCareers.map((c: string, idx: number) => (
+                                    <li key={idx}>{c}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
                           </div>
+                        </div>
+
+                        {/* Clashing planetary frequencies alignment check (Anti relationships) */}
+                        {numerologyResult.relationshipClash.clashing && (
+                          <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-xs text-gray-300 leading-relaxed">
+                            <span className="font-bold text-rose-350 flex items-center gap-1.5 uppercase mb-1.5 text-[9px] tracking-widest font-sans">
+                              <AlertCircle className="h-4 w-4 text-rose-450 shrink-0" />
+                              Hostile Planets Conflict Detected
+                            </span>
+                            <p className="text-gray-300 font-sans leading-relaxed">
+                              {numerologyResult.relationshipClash.desc} This tension drains your life force and creates sudden career delays.
+                            </p>
+                            <p className="text-amber-200 font-medium mt-1.5 sm:mt-2 text-[11px]">
+                              💡 Recommendation: Request our Premium Professionally Calculated Report below to calculate a modified Chaldean spelling tally that balances your driver/conductor vibrations perfectly!
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Missing Grid Numbers, Impacts & Remedies */}
+                        {numerologyResult.missingNumbers.length > 0 && (
+                          <div className="space-y-3">
+                            <span className="text-xs uppercase font-bold text-amber-200 block tracking-wider font-sans">Vedic Remedies for Missing Grid Coordinates</span>
+                            <div className="grid gap-3">
+                              {numerologyResult.missingNumbers.slice(0, 2).map((m: any) => (
+                                <div key={m.num} className="p-3.5 rounded-xl bg-royal-900 border border-white/5 text-xs space-y-1">
+                                  <div className="flex items-center justify-between">
+                                    <span className="font-bold text-amber-300 font-serif text-[13px]">Missing {m.num} — {m.planet}</span>
+                                    <span className="text-[9px] text-rose-300/80 bg-rose-950/20 border border-rose-500/15 px-1.5 py-0.5 rounded uppercase font-semibold">Coord Mismatch</span>
+                                  </div>
+                                  <p className="text-gray-300 leading-relaxed text-[11px]"><strong className="text-gray-400">Impact:</strong> {m.impact}</p>
+                                  <p className="text-emerald-300 font-medium leading-relaxed text-[11px] flex gap-1.5 items-start mt-1">
+                                    <CheckCircle className="h-3.5 w-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                                    <span><strong>Remedy:</strong> {m.remedy}</span>
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                            {numerologyResult.missingNumbers.length > 2 && (
+                              <div className="p-4 rounded-xl bg-gold-400/5 border border-gold-400/15 text-xs text-center space-y-1.5">
+                                <p className="text-amber-200 font-medium font-sans">
+                                  🔍 Detected {numerologyResult.missingNumbers.length - 2} more missing cosmic coordinates in your grid!
+                                </p>
+                                <p className="text-gray-400 text-[11px] leading-relaxed">
+                                  Standard access is mathematically capped. Click <strong className="text-gold-300">Generate Pro Report</strong> below to launch a comprehensive spelling alignment report detailing all standard handwritten palm solutions.
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Repeating Numbers Warnings (Digit fatigue) */}
+                        {numerologyResult.repeats.length > 0 && (
+                          <div className="p-3.5 rounded-xl bg-orange-950/15 border border-orange-500/15 text-xs space-y-2">
+                            <span className="font-bold text-orange-300 flex items-center gap-1.5 uppercase text-[9px] tracking-wider font-sans">
+                              <AlertCircle className="h-4 w-4 text-orange-400 shrink-0" />
+                              Digit Fatigue Warnings (Repeated Numbers)
+                            </span>
+                            <ul className="list-inside list-disc text-gray-300 space-y-1 pl-1 text-[11px]">
+                              {numerologyResult.repeats.map((r: any) => (
+                                <li key={r.num}>
+                                  <span className="font-mono font-bold text-orange-300">[{r.num}] repeated {numerologyResult.loshuGrid.find((g: any)=>g.num === r.num)?.count}x:</span> {r.warning}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                        {/* Loshu Destiny Guidance */}
+                        <div className="bg-royal-900/50 border border-white/5 p-4 rounded-xl text-xs space-y-2">
+                          <p className="font-bold text-amber-100 uppercase tracking-widest text-[9px]">Loshu Destiny Guidance</p>
+                          <p className="text-gray-400 italic font-medium leading-normal">"{numerologyResult.advice}"</p>
+                          <p className="text-gray-300 font-medium">Lucky color vibration: <span className="text-gold-300 font-bold">{numerologyResult.driverPlanet.color}</span></p>
                         </div>
 
                         {/* Upgrade pro */}
@@ -1099,7 +1208,7 @@ export default function AstroCalculators({
                                   Vedas Divine Path Chosen!
                                 </p>
                                 <p className="text-xs text-gray-300 leading-relaxed">
-                                  An excellent choice. Aligning your digital footprints brings harmony, professional abundance, and smooth pathways. You can request our premium AI to generate a detailed, comprehensive <strong className="text-amber-200">Mobile Correction report</strong> below, or select a new 10-digit number that sums to a lucky single digit like <strong className="text-amber-300 font-mono font-bold text-sm bg-emerald-900/40 px-1.5 py-0.5 rounded">{mobileNumerologyResult.kingNumber}</strong>.
+                                  An excellent choice. Aligning your digital footprints brings harmony, professional abundance, and smooth pathways. You can request our premium professionally calculated system to generate a detailed, comprehensive <strong className="text-amber-200">Mobile Correction report</strong> below, or select a new 10-digit number that sums to a lucky single digit like <strong className="text-amber-300 font-mono font-bold text-sm bg-emerald-900/40 px-1.5 py-0.5 rounded">{mobileNumerologyResult.kingNumber}</strong>.
                                 </p>
                                 <button 
                                   type="button"
@@ -1140,7 +1249,7 @@ export default function AstroCalculators({
                             <div className="space-y-2">
                               <span className="text-[10px] uppercase font-bold text-emerald-400 block tracking-wide font-sans">Auspicious Rays (Good Combinations)</span>
                               <div className="grid gap-2">
-                                {mobileNumerologyResult.goodCombosFound.map((item: any) => (
+                                {mobileNumerologyResult.goodCombosFound.slice(0, 2).map((item: any) => (
                                   <div key={item.combo} className="flex gap-3 p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10 text-xs items-start">
                                     <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
                                     <div>
@@ -1150,6 +1259,11 @@ export default function AstroCalculators({
                                   </div>
                                 ))}
                               </div>
+                              {mobileNumerologyResult.goodCombosFound.length > 2 && (
+                                <p className="text-[11px] text-amber-300 bg-amber-400/5 p-2 rounded border border-amber-500/10 text-center font-medium mt-1">
+                                  and {mobileNumerologyResult.goodCombosFound.length - 2} more auspicious configurations computed. Request Pro Report to unlock all calculated alignments!
+                                </p>
+                              )}
                             </div>
                           )}
 
@@ -1176,7 +1290,7 @@ export default function AstroCalculators({
                             <div className="space-y-2">
                               <span className="text-[10px] uppercase font-bold text-sky-400 block tracking-wide font-sans">Steady Rays (Neutral Combinations)</span>
                               <div className="grid gap-1.5">
-                                {mobileNumerologyResult.neutralCombosFound.map((item: any) => (
+                                {mobileNumerologyResult.neutralCombosFound.slice(0, 1).map((item: any) => (
                                   <div key={item.combo} className="flex gap-3 p-2.5 rounded-xl bg-sky-500/5 border border-sky-500/10 text-xs items-start">
                                     <Compass className="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
                                     <div>
@@ -1186,6 +1300,11 @@ export default function AstroCalculators({
                                   </div>
                                 ))}
                               </div>
+                              {mobileNumerologyResult.neutralCombosFound.length > 1 && (
+                                <p className="text-[10px] text-gray-400 text-center italic mt-1 font-mono">
+                                  (+ {mobileNumerologyResult.neutralCombosFound.length - 1} more neutral transitions locked in standard view)
+                                </p>
+                              )}
                             </div>
                           )}
 
@@ -1194,7 +1313,7 @@ export default function AstroCalculators({
                             <div className="space-y-2">
                               <span className="text-[10px] uppercase font-bold text-rose-400 block tracking-wide font-sans">Heavy Fields (Negative Combinations to manage)</span>
                               <div className="grid gap-2">
-                                {mobileNumerologyResult.negativeCombosFound.map((item: any) => (
+                                {mobileNumerologyResult.negativeCombosFound.slice(0, 2).map((item: any) => (
                                   <div key={item.combo} className="flex gap-3 p-3 rounded-xl bg-rose-500/5 border border-rose-500/10 text-xs items-start">
                                     <AlertCircle className="h-4 w-4 text-rose-400 shrink-0 mt-0.5" />
                                     <div>
@@ -1204,6 +1323,11 @@ export default function AstroCalculators({
                                   </div>
                                 ))}
                               </div>
+                              {mobileNumerologyResult.negativeCombosFound.length > 2 && (
+                                <p className="text-[11px] text-rose-300 bg-rose-400/5 p-2 rounded border border-rose-500/10 text-center font-medium mt-1">
+                                  and {mobileNumerologyResult.negativeCombosFound.length - 2} more heavy conflict alignments present. Upgrade to a Premium Report below to clear all blocks!
+                                </p>
+                              )}
                             </div>
                           )}
 
@@ -1252,68 +1376,100 @@ export default function AstroCalculators({
                   </div>
                 )}
 
-                {/* 5. DAILY HOROSCOPE RESULTS */}
-                {activeCalc === 'daily' && (
+                {/* 5. RUDRAKSHA ALIGNMENT RESULTS */}
+                {activeCalc === 'rudraksha' && (
                   <div className="glass-card border border-white/10 rounded-2xl p-6 md:p-8">
-                    {!dailyResult ? (
+                    {!rudrakshaResult ? (
                       <div className="h-full flex flex-col items-center justify-center text-center py-16">
-                        <Calendar className="h-12 w-12 text-gold-500/40 mb-3 animate-pulse" />
-                        <h4 className="font-serif text-lg text-gray-400">Moon alignment prediction is empty</h4>
-                        <p className="text-xs text-gray-500 max-w-xs mt-1">Select a Zodiac sign on the left to compute instant daily solar transitions.</p>
+                        <Award className="h-12 w-12 text-gold-500/40 mb-3 animate-pulse" />
+                        <h4 className="font-serif text-lg text-gray-400">Rudraksha alignment calculation is empty</h4>
+                        <p className="text-xs text-gray-500 max-w-xs mt-1">Submit your birth date on the left to align specialized holy beads to your goals.</p>
                       </div>
                     ) : (
                       <div className="space-y-6">
-                        {/* Header sign */}
+                        {/* Header area */}
                         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-4">
                           <div>
-                            <span className="text-xs uppercase tracking-widest text-gold-400 font-bold">Daily Stellar Alignment</span>
-                            <h3 className="font-serif text-2xl font-bold text-white mt-1">{selectedZodiac} Daily Transit Outlook</h3>
+                            <span className="text-xs uppercase tracking-widest text-gold-400 font-bold">Planetary Bead Alignment</span>
+                            <h3 className="font-serif text-2xl font-bold text-white mt-1">Your Rudraksha &amp; Siddh Mala Recommendation</h3>
+                            <p className="text-xs text-amber-200/80 mt-1">Focus Area: {rudrakshaResult.priorityTitle}</p>
                           </div>
                           
-                          <div className="flex gap-4 font-mono font-bold text-xs">
-                            <div className="px-3 py-1.5 rounded-lg bg-royal-900 border border-white/5">
-                              <span className="text-[10px] text-gray-400 block">LUCKY COLOR</span>
-                              <span className="text-amber-300">{dailyResult.luckyColor}</span>
+                          {/* Physic stats */}
+                          <div className="flex gap-3 font-mono font-bold text-xs">
+                            <div className="px-3 py-1.5 rounded-lg bg-royal-900 border border-white/5 text-center">
+                              <span className="text-[9px] text-gray-400 block uppercase">King Number</span>
+                              <span className="text-amber-300 text-sm font-extrabold">{rudrakshaResult.kingNumber}</span>
                             </div>
-                            <div className="px-3 py-1.5 rounded-lg bg-royal-900 border border-white/5">
-                              <span className="text-[10px] text-gray-400 block">LUCKY NUMBER</span>
-                              <span className="text-amber-300 text-center block text-sm">{dailyResult.luckyNumber}</span>
+                            <div className="px-3 py-1.5 rounded-lg bg-royal-900 border border-white/5 text-center">
+                              <span className="text-[9px] text-gray-400 block uppercase">Conductor</span>
+                              <span className="text-amber-300 text-sm font-extrabold">{rudrakshaResult.conductorNumber}</span>
                             </div>
                           </div>
                         </div>
 
-                        {/* Dynamic category metrics slider */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                          {[
-                            { name: 'Career / Power', score: dailyResult.scores.career, color: 'bg-cyan-500' },
-                            { name: 'Love / Connect', score: dailyResult.scores.love, color: 'bg-rose-500' },
-                            { name: 'Health / Prana', score: dailyResult.scores.health, color: 'bg-green-500' },
-                            { name: 'Wealth / Cashflow', score: dailyResult.scores.wealth, color: 'bg-amber-500' }
-                          ].map(metric => (
-                            <div key={metric.name} className="border border-white/5 p-3 rounded-lg bg-royal-900/50 space-y-2">
-                              <div className="flex justify-between font-bold">
-                                <span>{metric.name}</span>
-                                <span className="font-mono text-gold-400">{metric.score}%</span>
+                        {/* Custom Lucky Planetary bead alignment card */}
+                        <div className="border border-gold-500/20 bg-gold-500/5 p-4 rounded-xl space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Award className="h-5 w-5 text-gold-400" />
+                            <h4 className="text-xs font-bold text-gray-200 uppercase tracking-wider">Your Custom Lucky Planetary Alignment Bead</h4>
+                          </div>
+                          <p className="text-sm font-bold text-amber-300">{rudrakshaResult.luckyAlignment.bead}</p>
+                          <div className="grid grid-cols-2 gap-3 text-[10px] text-gray-400">
+                            <div>Ruler: <span className="text-white font-medium">{rudrakshaResult.luckyAlignment.planet}</span></div>
+                            <div>Power: <span className="text-white font-medium">{rudrakshaResult.luckyAlignment.deity}</span></div>
+                          </div>
+                          <p className="text-xs text-gray-300 leading-normal mt-1 border-t border-white/5 pt-2">
+                            {rudrakshaResult.luckyAlignment.desc}
+                          </p>
+                        </div>
+
+                        {/* Priority specific beads mapped list */}
+                        <div className="space-y-3.5">
+                          <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Recommended Beads For Your Priority</h4>
+                          
+                          {rudrakshaResult.items.map((beadItem: any, index: number) => (
+                            <div key={index} className="p-4 rounded-xl bg-royal-900/50 border border-white/5 space-y-2 text-xs">
+                              <div className="flex justify-between items-start gap-2">
+                                <span className="font-bold text-white text-sm">{beadItem.mukhi}</span>
+                                <span className="px-2 py-0.5 rounded bg-amber-400/10 border border-amber-400/20 text-amber-300 text-[9px] uppercase font-bold">
+                                  {beadItem.planet}
+                                </span>
                               </div>
-                              <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
-                                <div className={`h-full ${metric.color}`} style={{ width: `${metric.score}%` }} />
+                              <div className="grid grid-cols-2 gap-2 text-[10px] text-gray-400">
+                                <div>Deity: <span className="text-gray-200 font-medium">{beadItem.deity}</span></div>
+                                <div>Target Chakra: <span className="text-gray-200 font-medium">{beadItem.chakra}</span></div>
+                              </div>
+                              <p className="text-gray-300 leading-normal border-t border-white/5 pt-2 mt-1">
+                                {beadItem.benefit}
+                              </p>
+                              <div className="mt-1 bg-white/2 px-2.5 py-1.5 rounded-lg border border-white/5 inline-flex items-center gap-2">
+                                <span className="text-[9px] text-gold-400 font-mono font-bold uppercase">Mantra Chant:</span>
+                                <span className="text-green-300 font-mono text-[10px] italic">"{beadItem.mantra}"</span>
                               </div>
                             </div>
                           ))}
                         </div>
 
-                        {/* General guidelines */}
-                        <div className="bg-royal-900/30 p-4 rounded-xl border border-white/5 space-y-1">
-                          <p className="text-[10px] uppercase tracking-widest text-gold-400 font-bold">Auspicious Transit Hours Today</p>
-                          <p className="text-xs font-semibold text-white">{dailyResult.idealHours}</p>
-                          <div className="border-t border-white/5 pt-2 mt-2">
-                            <p className="text-[10px] uppercase tracking-widest text-gold-400 font-bold">Planetary Recommendation</p>
-                            <p className="text-xs text-gray-300 leading-relaxed mt-1 font-medium">{dailyResult.guidance}</p>
+                        {/* Complete Siddh Mala recommendation */}
+                        {rudrakshaResult.isSiddhMalaRecommended && (
+                          <div className="p-4 rounded-xl bg-gradient-to-r from-amber-500/10 to-royal-900 border border-amber-500/20 space-y-1.5 text-xs">
+                            <span className="text-[9px] uppercase tracking-wider text-amber-400 font-extrabold flex items-center gap-1">
+                              <Sparkles className="h-3.5 w-3.5 animate-pulse" />
+                              Supreme Cosmic Suggestion
+                            </span>
+                            <h4 className="font-serif font-bold text-white text-sm">Vedic Siddh Mala Formulation Recommended</h4>
+                            <p className="text-gray-300 leading-normal text-[11px]">
+                              {rudrakshaResult.siddhMalaDetails.benefit}
+                            </p>
+                            <p className="text-[10px] text-gray-400 mt-1 font-semibold">
+                              Contains: <span className="text-white font-mono">{rudrakshaResult.siddhMalaDetails.items}</span>
+                            </p>
                           </div>
-                        </div>
+                        )}
 
-                        {/* Upgrade CTA daily */}
-                        {renderUpgradeCTA('daily_horoscope_upgrade', { zodiac: selectedZodiac }, dailyResult)}
+                        {/* Upgrade CTA rudraksha */}
+                        {renderUpgradeCTA('rudraksha_alignment_report', rudrakshaInputs, rudrakshaResult)}
                       </div>
                     )}
                   </div>
@@ -1345,10 +1501,10 @@ export default function AstroCalculators({
           <div>
             <h4 className="text-sm font-bold text-amber-200 uppercase tracking-widest inline-flex items-center gap-1">
               <Sparkles className="h-4 w-4 text-amber-400 animate-pulse" />
-              Upgrade to Premium AI Analysis
+              Upgrade to Premium Professionally Calculated Analysis
             </h4>
             <p className="text-xs text-gray-400 mt-1 max-w-md">
-              Harness Gemini's extensive Vedic planetary modeling to write a highly detailed 400-word remedial prescription.
+              Harness our extensive Vedic planetary modeling and standard ancient matrices to write a highly detailed professionally calculated remedial prescription.
             </p>
           </div>
           

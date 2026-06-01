@@ -111,7 +111,7 @@ export default function Hero({ onScrollToServices, onExploreFree }: HeroProps) {
           </div>
           <div className="flex flex-col items-center">
             <span className="text-2xl font-bold font-display text-gold-300">Instant</span>
-            <span className="text-xs text-gray-400 mt-1">AI Consultations</span>
+            <span className="text-xs text-gray-400 mt-1">Vedic Calculations</span>
           </div>
           <div className="flex flex-col items-center">
             <span className="text-2xl font-bold font-display text-gold-300">100% Secure</span>

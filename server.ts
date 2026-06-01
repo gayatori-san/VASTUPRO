@@ -253,27 +253,40 @@ A divine vibrational resonance analysis has been calculated for your mobile coor
 
   // Backup Numerology Report
   return `### 🔢 Chaldean Numerology Life Grid & Loshu Matrix
+  
+A name vibration report has been computed for **${inputs.fullName || "Seeker"}** using your core birth alignment parameters.
 
-A name vibration report has been computed for **${inputs.fullName || "Seeker"}**.
-
-#### 1. Vibrational Coordinates
-*   **Psychic (Driver) Number:** **${base?.driver}** (ruled by planet *${base?.driverPlanet?.planet}*) — Represents core personality traits: ${base?.driverPlanet?.traits}.
-*   **Destiny (Conductor) Number:** **${base?.conductor}** (ruled by planet *${base?.conductorPlanet?.planet}*) — Dictates your career paths and worldly achievements: ${base?.conductorPlanet?.traits}.
+#### 1. Vibrational Frequencies
+*   **Psychic (Driver) Number:** **${base?.driver}** (ruled by planet *${base?.driverPlanet?.planet}*) — Core traits: *${base?.driverPlanet?.traits}*.
+*   **Destiny (Conductor) Number:** **${base?.conductor}** (ruled by planet *${base?.conductorPlanet?.planet}*) — Career flow: *${base?.conductorPlanet?.traits}*.
 *   **Spiritual Color Accent:** ${base?.driverPlanet?.color}
 
-#### 2. Loshu Grid Matrix
+#### 2. Loshu Grid Matrix Alignment
 \`\`\`
 [ ${base?.loshuGrid?.find((g: any) => g.num === 4)?.count ? "4" : " "} ]  [ ${base?.loshuGrid?.find((g: any) => g.num === 9)?.count ? "9" : " "} ]  [ ${base?.loshuGrid?.find((g: any) => g.num === 2)?.count ? "2" : " "} ]
 [ ${base?.loshuGrid?.find((g: any) => g.num === 3)?.count ? "3" : " "} ]  [ ${base?.loshuGrid?.find((g: any) => g.num === 5)?.count ? "5" : " "} ]  [ ${base?.loshuGrid?.find((g: any) => g.num === 7)?.count ? "7" : " "} ]
 [ ${base?.loshuGrid?.find((g: any) => g.num === 8)?.count ? "8" : " "} ]  [ ${base?.loshuGrid?.find((g: any) => g.num === 1)?.count ? "1" : " "} ]  [ ${base?.loshuGrid?.find((g: any) => g.num === 6)?.count ? "6" : " "} ]
 \`\`\`
 
+${base?.relationshipClash?.clashing ? `#### ⚠️ Clashing Vibrations Alert
+> **Planetary Anti-Relationship Clash**: ${base.relationshipClash.desc} This hostile overlap draws severe friction into your direct life pathways and triggers consecutive delays.` : ''}
+
+#### 💼 Aligned Professional Careers
+*   **Driver career coordinates:** ${base?.driverCareers?.join(', ')}
+*   **Conductor career coordinates:** ${base?.conductorCareers?.join(', ')}
+
+${base?.missingNumbers?.length ? `#### 🧩 Missing Elements & Handwritten Palm Remedies
+${base.missingNumbers.map((m: any) => `*   **Missing ${m.num} (${m.planet})**: *Impact*: ${m.impact} \n    👉 *Remedy*: ${m.remedy}`).join('\n')}` : ''}
+
+${base?.repeats?.length ? `#### 🔁 Digit Overload Warnings (Repeats)
+${base.repeats.map((r: any) => `*   **${r.num} repeated**: ${r.warning}`).join('\n')}` : ''}
+
 ***
 
-### 🌟 Personal Vibration Alignment Plan
-1.  **Name Spelling Correction:** Adjust name signature so its total Chaldean tally vibration lands on luck score 1, 5, or 6.
+### 🌟 Personal Vibration Spelling Corrections & Remedies
+1.  **Name Spelling Correction:** Adjust name signature so its total Chaldean tally vibration lands on luck score 1, 5, or 6 to overcome driver-conductor relationship conflicts and clear all delays.
 2.  **Creative Directions:** Work, sleep, and negotiate contracts facing your lucky direction (**North-East**).
-3.  **Lucky Crystal Access:** Wear a raw green jade bracelet to promote mercury flow and lock business earnings.`;
+3.  **Lucky Crystal Access:** Wear a raw green jade bracelet to promote mercury prince green balance element flow and lock business earnings.`;
 }
 
 // ---------------------------------------------------------------------

@@ -325,6 +325,122 @@ export function calculateNumerology(inputs: NumerologyInputs) {
     9: { planet: 'Mars', traits: 'Energy, Courage, Action, Humanitarian', color: 'Red' }
   };
 
+  // 4c. extract missing numbers impact & remedies from Slide Deck (Pages 9-26)
+  const missingNumbersList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const missingNumbersDetailed: Array<{ num: number; planet: string; impact: string; remedy: string }> = [];
+  
+  missingNumbersList.forEach(num => {
+    if ((counts[num] || 0) === 0) {
+      let impact = '';
+      let remedy = '';
+      let planetName = planetsMap[num]?.planet || '';
+      
+      switch (num) {
+        case 1:
+          impact = 'You will find difficulty in expressing yourself, although you have low ego issues and spend your time nurturing others.';
+          remedy = 'Write No. 1 with orange ink on the Mount under the Ring Finger (Mount of Sun) to channel solar communication channels.';
+          break;
+        case 2:
+          impact = 'You will suffer from lack of sensitivity or logical intuition. You can be impatient, unpunctual, and feel an urge to constantly justify your actions.';
+          remedy = 'Write No. 2 with silver/white ink on the external part of your left palm to pacify the moon channels.';
+          break;
+        case 3:
+          impact = 'Prone to lack of self-confidence, finding it tough to express yourself and thinking illogically under heavy mental distractions.';
+          remedy = 'Write No. 3 with yellow ink on the mount under your Index Finger (Mount of Jupiter) to unlock educational and advisory luck.';
+          break;
+        case 4:
+          impact = 'Prone to lack of organizational skills, finding a fixed routine hard to manage, leading to low self-esteem and impatience.';
+          remedy = 'Write No. 4 with gray/black ink in the center of your palm (Mount of Rahu) to bring discipline and practical grounding.';
+          break;
+        case 5:
+          impact = 'Setting defined target goals is a major challenge. Prone to lack of versatility, needing constant external motivation to stay on track.';
+          remedy = 'Write No. 5 with green ink on the mount under the Small Finger (Mount of Mercury) and consider donating green items to transgenders.';
+          break;
+        case 6:
+          impact = 'Prone to hiding your truest feelings from close relationships, feeling less selfless, or experiencing disputes with parents.';
+          remedy = 'Write No. 6 with white ink on the mount under the Thumb (Mount of Venus) to attract family warmth and clean luxury.';
+          break;
+        case 7:
+          impact = 'Leads to a slightly self-immersed, unorganized life. You may be decidedly independent but struggle to convey feelings with partners.';
+          remedy = 'Write No. 7 with light blue ink in the center of your lower palm (Mount of Ketu) to restore spiritual and analytical alignment.';
+          break;
+        case 8:
+          impact = 'Prone to poor financial planning, lack of career motivation, and quitting tasks halfway. Your trusting nature risks financial fraud.';
+          remedy = 'Write No. 8 with dark blue ink on the mount under the Middle Finger (Mount of Saturn) to establish rigid money management.';
+          break;
+        case 9:
+          impact = 'Prone to overlooking the needs of others, feeling emotionally detached, and struggling to display a humanitarian warm side.';
+          remedy = 'Write No. 9 with red ink on the inner and outer part of your palm to stimulate Mars warrior and courage frequencies.';
+          break;
+      }
+      
+      missingNumbersDetailed.push({
+        num,
+        planet: planetName,
+        impact,
+        remedy
+      });
+    }
+  });
+
+  // 4d. Aligned Professional career recommendations by Planet from slide notes
+  const getAlignedCareers = (num: number) => {
+    switch (num) {
+      case 1: return ['Baking/Bakery owner', 'Government official', 'Electrical contractor', 'Business or Money advisor', 'Producer/Director', 'Car Industry executive'];
+      case 2: return ['Musician/Composer', 'Juice/Dairy shop owner', 'NGO teacher', 'Nourishment Nurse', 'Architect/Fashion designer', 'Creative Article painter'];
+      case 3: return ['Teacher/Public speaker', 'Strategic Planner', 'Occult healer/counsellor', 'Advisor/Lawyer', 'Events/Occult scientist', 'Film writer/motivator'];
+      case 4: return ['Sales & Digital marketing strategist', 'Insurance broker', 'Financial advisor/Shares broker', 'Journalist/Editor', 'Lottery/Gambling business', 'Technology consultant'];
+      case 5: return ['Financial/Luxury mediator', 'Performing artist/story writer', 'Software/Networking coordinator', 'Chartered accountant', 'Marketing manager'];
+      case 6: return ['Hotel/Travel salon operator', 'Cosmetics/Beauty products dealer', 'Jewellery industry artist', 'Garment/Handloom stockist', 'Doctor/Public relations executive'];
+      case 7: return ['Spiritual/Reiki trainer', 'Astrologer/Numerologist', 'Technical researcher/scientist', 'Spy/Detective', 'Occult items shopkeeper', 'Metal industry worker'];
+      case 8: return ['Real estate/Land developer', 'Investment/Banking manager', 'NGO administrator', 'Technological inventor', 'Lawyer', 'Agricultural researcher', 'Iron/Leather industry merchant'];
+      case 9: return ['NGO administrator', 'Preacher/Soldier', 'Ayurveda doctor/Dentist', 'Transporter/Medical representative', 'Electrical items stockist', 'Plastics business owner'];
+      default: return ['Cosmic entrepreneur', 'Vedic guide'];
+    }
+  };
+
+  const driverCareers = getAlignedCareers(driverNum);
+  const conductorCareers = getAlignedCareers(conductorNum);
+
+  // 4e. Clashing energies (Anti relationships) from Slide Notes page 11-13
+  let relationshipClash: { clashing: boolean; desc: string } = { clashing: false, desc: '' };
+  if ((driverNum === 2 && conductorNum === 8) || (driverNum === 8 && conductorNum === 2)) {
+    relationshipClash = {
+      clashing: true,
+      desc: 'Moon (Queen, 2) & Saturn (illegitimate child, 8) clash. These numbers never get along natively, causing inner anxiety, financial blocks, and extreme delays.'
+    };
+  } else if ((driverNum === 3 && conductorNum === 6) || (driverNum === 6 && conductorNum === 3)) {
+    relationshipClash = {
+      clashing: true,
+      desc: 'Jupiter (Dev Guru, 3) & Venus (Daitya Guru, 6) clash. Represents a peculiar rival frequency. While comfortable at a distance, permanent relationship closeness causes severe clashes, conflicting advice, and relationship strain.'
+    };
+  } else if ((driverNum === 4 && conductorNum === 8) || (driverNum === 8 && conductorNum === 4)) {
+    relationshipClash = {
+      clashing: true,
+      desc: 'Rahu (Gunda, 4) & Saturn (the Judge, 8) clash. While they share a bond of hard work, their direct conjunction triggers intense early-life struggle, recurring headaches, and severe blockages.'
+    };
+  }
+
+  // 4f. Repetitive digits warnings (present > 2 times) from slide deck
+  const repeatsDetailed: Array<{ num: number; warning: string }> = [];
+  [1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(num => {
+    if ((counts[num] || 0) > 2) {
+      let warning = '';
+      switch (num) {
+        case 1: warning = 'Emotional ego overload, speaking and acting too fast.'; break;
+        case 2: warning = 'Prone to severe mood swings, emotional depression, and BP issues.'; break;
+        case 3: warning = 'Hungry for knowledge, but severely ungrounded and prone to procrastination.'; break;
+        case 4: warning = 'High risk of repeated struggles, setbacks, and chronic headache fatigue.'; break;
+        case 5: warning = 'Prone to laziness, lethargic blocks, and chaotic speech fluctuations.'; break;
+        case 6: warning = 'Luxury lover but blocked from enjoying resources when actually needed.'; break;
+        case 7: warning = 'High internal disturbances, overthinking, and severe anxiety blocks.'; break;
+        case 8: warning = 'Facing continuous delays, administrative disturbances, and recurring obstacles.'; break;
+        case 9: warning = 'Vulnerable to debt, intense anger outbursts, and blood-related issues.'; break;
+      }
+      repeatsDetailed.push({ num, warning });
+    }
+  });
+
   return {
     driver: driverNum,
     conductor: conductorNum,
@@ -333,7 +449,12 @@ export function calculateNumerology(inputs: NumerologyInputs) {
     loshuGrid,
     driverPlanet: planetsMap[driverNum] || { planet: 'Cosmos', traits: 'Dynamic energy', color: 'Gold' },
     conductorPlanet: planetsMap[conductorNum] || { planet: 'Cosmos', traits: 'Dynamic career', color: 'Gold' },
-    advice: getNumerologyAxiom(driverNum, conductorNum)
+    advice: getNumerologyAxiom(driverNum, conductorNum),
+    missingNumbers: missingNumbersDetailed,
+    repeats: repeatsDetailed,
+    driverCareers,
+    conductorCareers,
+    relationshipClash
   };
 }
 
@@ -405,30 +526,184 @@ function getNumerologyAxiom(driver: number, conductor: number) {
 /**
  * 5. Daily Horoscope Prediction Generator
  */
-export function getDailyHoroscope(zodiac: string) {
-  const seed = stringToHash(zodiac + new Date().toISOString().substring(0, 10));
+export function calculateRudrakshaAlignment(birthDate: string, priority: string) {
+  const parts = birthDate.split('-');
+  const year = parts[0] || '1995';
+  const month = parts[1] || '10';
+  const day = parts[2] || '15';
+
+  // 1. Psychic/Driver (King)
+  const daySum = day.split('').reduce((sum, d) => sum + parseInt(d || '0'), 0);
+  const kingNum = reduceToSingleDigit(daySum);
+
+  // 2. Destiny/Conductor (Queen)
+  const fullDateStr = year + month + day;
+  const fullSum = fullDateStr.split('').reduce((sum, d) => sum + parseInt(d || '0'), 0);
+  const conductorNum = reduceToSingleDigit(fullSum);
+
+  // Determine core recommended items based on Priority
+  let priorityTitle = "General Alignment";
+  let items: Array<{ mukhi: string; deity: string; planet: string; chakra: string; benefit: string; mantra: string }> = [];
   
-  const scoreCard = {
-    career: 70 + (seed % 31),
-    love: 68 + (seed % 33),
-    health: 65 + (seed % 36),
-    wealth: 72 + (seed % 29)
+  if (priority === 'wealth') {
+    priorityTitle = "Abundance, Money, & Kuber Alignment";
+    items = [
+      {
+        mukhi: "7 Mukhi Rudraksha",
+        deity: "Goddess Mahalaxmi",
+        planet: "Venus",
+        chakra: "All Chakras / Solar Plexus",
+        benefit: "Attracts massive wealth, financial abundance, clears obstacles in business, and corrects digestion & liver issues.",
+        mantra: "Om Hreem Shreem Namah"
+      },
+      {
+        mukhi: "21 Mukhi Rudraksha",
+        deity: "Lord Shiva & Lord Kubera",
+        planet: "All Planets",
+        chakra: "Third Eye / Crown",
+        benefit: "The ultimate abundance bead for multi-generational wealth, severe stress relief, and protection. Usually gold capped.",
+        mantra: "Om Hreem Shreem Yakshaye Kuberaye Namah"
+      }
+    ];
+  } else if (priority === 'health') {
+    priorityTitle = "Prana, Health Restoration & Vitality";
+    items = [
+      {
+        mukhi: "3 Mukhi Rudraksha",
+        deity: "Agni Dev (Fire God)",
+        planet: "Mars",
+        chakra: "Solar Plexus Chakra",
+        benefit: "Releases subconscious rage, pain, and depression. Incredible for stomach, digestive system, and facial glowing.",
+        mantra: "Om Kleem Namah"
+      },
+      {
+        mukhi: "6 Mukhi Rudraksha",
+        deity: "Lord Kartikeya",
+        planet: "Venus / Mars",
+        chakra: "Sacral Chakra",
+        benefit: "Provides high physical endurance, manages weight/obesity, and cures chronic bone, knee, joint and arthritis pains.",
+        mantra: "Om Hreem Hum Namah"
+      },
+      {
+        mukhi: "12 Mukhi Rudraksha",
+        deity: "12 Aditya (Sungod)",
+        planet: "Sun",
+        chakra: "Solar Plexus Chakra",
+        benefit: "Boosts immunity, grants radiating aura, cures chronic heart or liver concerns, and attracts high administrative power.",
+        mantra: "Om Kraum Sraum Raum Namah"
+      }
+    ];
+  } else if (priority === 'education') {
+    priorityTitle = "Education, Brain Power & Memory Focus";
+    items = [
+      {
+        mukhi: "Saraswati Bandh Combination",
+        deity: "Goddess Saraswati (Two 4-Mukhi & One 6-Mukhi)",
+        planet: "Jupiter & Venus",
+        chakra: "Throat / Throat Command",
+        benefit: "The absolute premium combination for students. Drastically improves study concentration, artistic focus, and public speech daring.",
+        mantra: "Om Eem Saraswatye Namah"
+      },
+      {
+        mukhi: "5 Mukhi Rudraksha",
+        deity: "Rudra Kalagni",
+        planet: "Jupiter",
+        chakra: "Throat Chakra",
+        benefit: "Spiritual connection, controls high blood pressure, stabilizes academic tension, and removes negative focus patterns.",
+        mantra: "Om Hreem Namah"
+      }
+    ];
+  } else if (priority === 'relationship') {
+    priorityTitle = "Marriage Search, Partner Harmony & Connect";
+    items = [
+      {
+        mukhi: "Gauri Shankar Rudraksh",
+        deity: "Lord Shiva & Goddess Parvati (Shiva Shakti)",
+        planet: "Venus",
+        chakra: "Heart Chakra",
+        benefit: "The premier marital healing bead. Resolves partnership clashes, brings absolute harmony, and attracts a highly compatible life partner.",
+        mantra: "Om Shree Gauri Shankaraye Namah"
+      },
+      {
+        mukhi: "2 Mukhi Rudraksha",
+        deity: "Ardhanareshwar",
+        planet: "Moon",
+        chakra: "Sacral Chakra",
+        benefit: "Improves relationships between husband-wife, heals emotional instability, and cures kidney/intestine related blocks.",
+        mantra: "Om Shreem Namah"
+      }
+    ];
+  } else if (priority === 'protection') {
+    priorityTitle = "Negative Energy Shield & Debt Recovery";
+    items = [
+      {
+        mukhi: "9 Mukhi Rudraksha",
+        deity: "Goddess Durga (9 Forms of Shakti)",
+        planet: "Rahu",
+        chakra: "Crown Chakra",
+        benefit: "Eliminates deep phobias, evil-eye/black-magic fears. Excellent for learning foreign languages and neurological healing.",
+        mantra: "Om Hreem Hum Namah"
+      },
+      {
+        mukhi: "10 Mukhi Rudraksha",
+        deity: "Lord Vishnu",
+        planet: "All Planets",
+        chakra: "Sacral Chakra",
+        benefit: "Acts as a supreme legal shield. Helpful in real-estate disputes, debt clearance, and provides dense structural protection.",
+        mantra: "Om Hreem Namah Namah"
+      }
+    ];
+  } else {
+    priorityTitle = "Career Expansion, Daring & Obstacle Removal";
+    items = [
+      {
+        mukhi: "8 Mukhi Rudraksha",
+        deity: "Lord Ganesha",
+        planet: "Ketu",
+        chakra: "Root Chakra",
+        benefit: "Eliminates career delays, removes procrastination habits, and provides high path-paving success in critical enterprises.",
+        mantra: "Om Hum Namah"
+      },
+      {
+        mukhi: "11 Mukhi Rudraksha",
+        deity: "Lord Hanuman Ji",
+        planet: "All Planets",
+        chakra: "Throat Chakra",
+        benefit: "Boosts competitive exam success, risk-assessment, immunity, logical reasoning, and decisive power.",
+        mantra: "Om Hreem Hum Namah"
+      }
+    ];
+  }
+
+  // Planetary alignment recommendation based on King (Driver) number
+  const kingPlanets: Record<number, { bead: string; planet: string; deity: string; desc: string }> = {
+    1: { bead: "1 Mukhi / 12 Mukhi Rudraksha", planet: "Sun", deity: "Lord Shiva / Aditya", desc: "Aligns your leading, royal King energy. Boosts ego-stability, government recognition and authority." },
+    2: { bead: "2 Mukhi / 16 Mukhi Rudraksha", planet: "Moon", deity: "Lord Chandrama / Rama", desc: "Soothes emotional shifts and negative dreams. Increases public-attraction and mental wellness." },
+    3: { bead: "5 Mukhi / 4 Mukhi Rudraksha", planet: "Jupiter", deity: "Rudra Kalagni / Lord Brahma", desc: "Enhances advisory, teaching, and wisdom coordinates. Brings immense knowledge and high vocabulary power." },
+    4: { bead: "9 Mukhi / Ganesh Rudraksh", planet: "Rahu", deity: "Goddess Durga / Ganesha", desc: "Mitigates sudden obstacles and mental blockages. Highly beneficial for research and legal stability." },
+    5: { bead: "15 Mukhi / 19 Mukhi Rudraksha", planet: "Mercury", deity: "Pashupatinath / Lord Vishnu", desc: "Fosters supreme trading, business calculation, and flawless public orations." },
+    6: { bead: "13 Mukhi / Gauri Shankar Rudraksh", planet: "Venus", deity: "Kamadeva / Lord Shiva-Parvati", desc: "Amplifies magnetic luxury attraction and aesthetic talents. Sparks absolute marital harmony." },
+    7: { bead: "8 Mukhi Rudraksha", planet: "Ketu", deity: "Lord Ganesha", desc: "Unleashes profound metaphysical insights, breaks procrastination, and resolves bone/knee conflicts." },
+    8: { bead: "14 Mukhi / 17 Mukhi / 18 Mukhi", planet: "Saturn", deity: "Hanuman Ji / Vishvakarma", desc: "Acts as a divine armor against Shani Sade Sati. Drives heavy structured long-term empires." },
+    9: { bead: "3 Mukhi Rudraksha", planet: "Mars", deity: "Agni Dev", desc: "Converts hyper-anger and stomach troubles into courageous administrative achievements." }
   };
 
-  const adviceText = [
-    'Today is highly beneficial for executing expansion projects. Keep communications gentle.',
-    'The cosmic field supports deep alignment. Postpone major real estate investments.',
-    'Solar energy channels support structural improvements in health. Practice diaphragmatic breathing.',
-    'An outstanding day for professional presentations and signing dynamic commercial agreements.'
-  ];
+  const luckyAlignment = kingPlanets[kingNum] || kingPlanets[1];
+
+  const isSiddhMalaRecommended = conductorNum === 1 || conductorNum === 8 || priority === 'career' || priority === 'wealth';
 
   return {
-    zodiac,
-    scores: scoreCard,
-    idealHours: `${(8 + (seed % 4))}:00 AM - ${(11 + (seed % 4))}:00 AM`,
-    luckyColor: ['Deep Saffron', 'Royal Crimson', 'Cosmic Blue', 'Pure Pearl Milk', 'Emerald Saffron', 'Golden Honey'][(seed % 6)],
-    luckyNumber: (seed % 9) + 1,
-    guidance: adviceText[seed % adviceText.length]
+    kingNumber: kingNum,
+    conductorNumber: conductorNum,
+    priorityTitle,
+    items,
+    luckyAlignment,
+    isSiddhMalaRecommended,
+    siddhMalaDetails: {
+      items: "1 to 14 Mukhi + Gauri Shankar + Ganesh Rudraksh",
+      benefit: "Represents the supreme celestial configuration of all planets. Removes severe Kundli Doshas, establishes dense protective shields, and brings direct cosmic Shiva-Shakti blessings.",
+      mantra: "Om Namah Shivaya (108 times daily)"
+    }
   };
 }
 

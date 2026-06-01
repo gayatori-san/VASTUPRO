@@ -196,7 +196,7 @@ export default function Dashboard({ user, orders, reports, credits }: DashboardP
                   <div className="flex flex-col items-center justify-center text-center py-24 space-y-4">
                     <Star className="h-12 w-12 text-gold-400/30 animate-pulse" />
                     <h3 className="font-serif text-lg text-gray-400">Your Cosmos Altar is blank</h3>
-                    <p className="text-xs text-gray-500 max-w-sm">You haven't generated any premium reports yet. Try one of our calculators and click "Generate Pro Report" to trigger Gemini AI consultations.</p>
+                    <p className="text-xs text-gray-500 max-w-sm">You haven't generated any premium reports yet. Try one of our calculators and click "Generate Pro Report" to trigger professional calculations.</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -209,7 +209,7 @@ export default function Dashboard({ user, orders, reports, credits }: DashboardP
                         <div>
                           <div className="flex items-start justify-between">
                             <span className="px-2 py-0.5 rounded bg-amber-400/10 text-amber-300 border border-amber-400/20 text-[8px] font-bold uppercase tracking-wider">
-                              AI Prescription
+                              Vedic Prescription
                             </span>
                             <span className="text-[10px] text-gray-500 font-mono">{rep.createdAt.substring(0, 10)}</span>
                           </div>

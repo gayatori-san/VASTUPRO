@@ -384,7 +384,7 @@ export default function App() {
                   <Star className="h-7 w-7 text-gold-400 fill-gold-400" />
                 </div>
                 <blockquote className="font-serif text-xl md:text-2xl leading-relaxed text-gray-200">
-                  "VastuPro's AI analysis for my office structural corrections boosted our team prana flow. We got clear crystal remedy prescriptions within seconds by using our standard layout coordinates."
+                  "VastuPro's digital analysis for my office structural corrections boosted our team prana flow. We got clear crystal remedy prescriptions within seconds by using our standard layout coordinates."
                 </blockquote>
                 <div>
                   <p className="font-bold text-gold-300">Harish Singhania</p>
@@ -405,7 +405,7 @@ export default function App() {
                   <p className="text-gray-400 leading-relaxed">No. VastuPro works purely with directional corrective crystals, metal threads, pyramid frequencies, and color filters. There is absolutely no structural damage advised.</p>
                 </div>
                 <div className="p-5 rounded-xl border border-white/5 bg-royal-900/20 space-y-2">
-                  <h4 className="font-serif font-bold text-amber-200 text-base">How do I purchase AI credits?</h4>
+                  <h4 className="font-serif font-bold text-amber-200 text-base">How do I purchase report credits?</h4>
                   <p className="text-gray-400 leading-relaxed">Simply sign in with Google, choose any premium service service click "Buy Credits", or subscribe to our bundle plans. Credit tokens sync to your profile instantly.</p>
                 </div>
               </div>
@@ -465,7 +465,7 @@ export default function App() {
                   <p className="text-xs text-gray-400">Perfect to test a single detailed Room Vastu correction or birth chart dasha.</p>
                   <p className="text-3xl font-extrabold text-gold-400">₹199<span className="text-xs text-gray-500 font-normal"> / one-time</span></p>
                   <div className="border-t border-white/5 pt-4 space-y-2 text-xs text-gray-300">
-                    <p className="flex items-center gap-1.5"><Check className="h-4 w-4 text-green-400" /> 1 Full markdown AI Report</p>
+                    <p className="flex items-center gap-1.5"><Check className="h-4 w-4 text-green-400" /> 1 Full markdown Premium Report</p>
                     <p className="flex items-center gap-1.5"><Check className="h-4 w-4 text-green-400" /> Basic gemstones recommendation</p>
                   </div>
                 </div>
@@ -488,7 +488,7 @@ export default function App() {
                   <p className="text-xs text-gray-400">Full house optimization plus planetary matching assessment. Generous discount included!</p>
                   <p className="text-3xl font-extrabold text-gold-400">₹499<span className="text-xs text-gray-500 font-normal"> / bundle</span></p>
                   <div className="border-t border-white/5 pt-4 space-y-2 text-xs text-gray-300">
-                    <p className="flex items-center gap-1.5"><Check className="h-4 w-4 text-green-400" /> 5 Full markdown AI Reports</p>
+                    <p className="flex items-center gap-1.5"><Check className="h-4 w-4 text-green-400" /> 5 Full markdown Premium Reports</p>
                     <p className="flex items-center gap-1.5"><Check className="h-4 w-4 text-green-400" /> Direct download as Markdown / PDF</p>
                     <p className="flex items-center gap-1.5"><Check className="h-4 w-4 text-green-400" /> Priority server routing (fast generation)</p>
                   </div>
@@ -509,7 +509,7 @@ export default function App() {
                   <p className="text-xs text-gray-400">Ideal for professional architects, builders, or commercial astrolabes consulting teams.</p>
                   <p className="text-3xl font-extrabold text-gold-400">₹899<span className="text-xs text-gray-500 font-normal"> / bundle</span></p>
                   <div className="border-t border-white/5 pt-4 space-y-2 text-xs text-gray-300">
-                    <p className="flex items-center gap-1.5"><Check className="h-4 w-4 text-green-400" /> 12 Full AI evaluation outputs</p>
+                    <p className="flex items-center gap-1.5"><Check className="h-4 w-4 text-green-400" /> 12 Full premium evaluation outputs</p>
                     <p className="flex items-center gap-1.5"><Check className="h-4 w-4 text-green-400" /> Office &amp; commercial layout coverage</p>
                     <p className="flex items-center gap-1.5"><Check className="h-4 w-4 text-green-400" /> Personalized signature vibration correctors</p>
                   </div>
